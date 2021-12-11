@@ -121,10 +121,11 @@ class Maze:
         toBeVisited = deque()
         toBeVisited.append(self.startNode)
 
-        nodesExpaned = 0 # ! delete after testing
-
         while toBeVisited:
             currentNode = toBeVisited.pop()
+
+            if currentNode.isVisited: continue
+
             currentNode.isVisited = True
 
             if (all(node.isVisited for node in self.goalNodes)):
@@ -132,8 +133,6 @@ class Maze:
                 return True
 
             for node in self.getAdjacentNodes(currentNode):
-                if node.isVisited: continue
-
                 toBeVisited.append(node)
 
         self.resetVisitedNodes()
