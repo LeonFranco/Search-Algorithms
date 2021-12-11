@@ -168,13 +168,13 @@ class Maze:
 
         for row in self.maze:
             for node in row:
-                if node.type == NodeType.OBSTACLE: continue
+                if node.type == NodeType.OBSTACLE or node.type == NodeType.START: continue
                 node.g = random.randint(MIN_COST, MAX_COST)
 
     def calculateHeuristics(self):
         for row in self.maze:
             for node in row:
-                if node.type == NodeType.OBSTACLE: continue
+                if node.type == NodeType.OBSTACLE or node.type == NodeType.GOAL: continue
                 node.h = min(self.calculateManhattanDistance(node, goal) for goal in self.goalNodes)
 
     @staticmethod
