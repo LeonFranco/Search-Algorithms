@@ -1,6 +1,6 @@
+from __future__ import annotations
 from dataclasses import dataclass
 from .nodetype import NodeType
-from __future__ import annotations
 
 @dataclass
 class Node:
