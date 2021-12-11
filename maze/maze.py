@@ -99,7 +99,6 @@ class Maze:
 
     def addObstacles(self):
         numOfObstacleNodes = len(self.goalNodes) * 4
-
         obstacleGenerateCounter = 0
 
         while obstacleGenerateCounter != numOfObstacleNodes:
@@ -122,6 +121,8 @@ class Maze:
         toBeVisited = deque()
         toBeVisited.append(self.startNode)
 
+        isValid = False
+
         while toBeVisited:
             currentNode = toBeVisited.pop()
 
@@ -129,15 +130,19 @@ class Maze:
 
             currentNode.isVisited = True
 
-            if (all(node.isVisited for node in self.goalNodes)):
-                self.resetVisitedNodes()
-                return True
+            if currentNode.type == NodeType.GOAL and all(node.isVisited for node in self.goalNodes):
+                isValid = True
+                break
+
+            # if (all(node.isVisited for node in self.goalNodes)):
+            #     self.resetVisitedNodes()
+            #     return True
 
             for node in self.getAdjacentNodes(currentNode):
                 toBeVisited.append(node)
 
         self.resetVisitedNodes()
-        return False
+        return isValid
             
     def getAdjacentNodes(self, node: Node):
         neighbourNodeCoordinates = [
