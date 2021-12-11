@@ -5,6 +5,7 @@ import globalconstants
 import random
 import math
 from collections import deque
+import copy
 
 random.seed(globalconstants.SEED)
 
@@ -176,6 +177,19 @@ class Maze:
             for node in row:
                 if node.type == NodeType.OBSTACLE or node.type == NodeType.GOAL: continue
                 node.h = min(self.calculateManhattanDistance(node, goal) for goal in self.goalNodes)
+
+    def __deepcopy__(self, memo):
+        cls = self.__class__
+        result = cls.__new__(cls)
+        memo[id(self)] = result
+
+        result.rowLength = self.rowLength
+        result.columnLength = self.columnLength
+        result.maze = copy.deepcopy(self.maze, memo)
+        result.startNode = result.maze[self.startNode.row][self.startNode.col]
+        result.goalNodes = [result.maze[node.row][node.col] for node in self.goalNodes]
+
+        return result
 
     @staticmethod
     def calculateManhattanDistance(node1: Node, node2: Node):
