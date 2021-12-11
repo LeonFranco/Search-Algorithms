@@ -134,10 +134,6 @@ class Maze:
                 isValid = True
                 break
 
-            # if (all(node.isVisited for node in self.goalNodes)):
-            #     self.resetVisitedNodes()
-            #     return True
-
             for node in self.getAdjacentNodes(currentNode):
                 toBeVisited.append(node)
 
