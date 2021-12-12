@@ -40,12 +40,26 @@ class Maze:
                     case NodeType.OBSTACLE:
                         result += "# "
                     case NodeType.PATH:
-                        result += ". "
+                        if node.isVisited: result += "* "
+                        else:              result += ". "
                     case NodeType.START:
                         result += "S "
                     case NodeType.GOAL:
                         result += "G "
             result += "\n"
+
+        return result
+
+    def __deepcopy__(self, memo):
+        cls = self.__class__
+        result = cls.__new__(cls)
+        memo[id(self)] = result
+
+        result.rowLength = self.rowLength
+        result.columnLength = self.columnLength
+        result.maze = copy.deepcopy(self.maze, memo)
+        result.startNode = result.maze[self.startNode.row][self.startNode.col]
+        result.goalNodes = [result.maze[node.row][node.col] for node in self.goalNodes]
 
         return result
 
@@ -166,7 +180,7 @@ class Maze:
 
     def generateRandomCosts(self):
         MIN_COST = 1
-        MAX_COST = 100
+        MAX_COST = 10
 
         for row in self.maze:
             for node in row:
@@ -178,19 +192,6 @@ class Maze:
             for node in row:
                 if node.type == NodeType.OBSTACLE or node.type == NodeType.GOAL: continue
                 node.h = min(self.calculateManhattanDistance(node, goal) for goal in self.goalNodes)
-
-    def __deepcopy__(self, memo):
-        cls = self.__class__
-        result = cls.__new__(cls)
-        memo[id(self)] = result
-
-        result.rowLength = self.rowLength
-        result.columnLength = self.columnLength
-        result.maze = copy.deepcopy(self.maze, memo)
-        result.startNode = result.maze[self.startNode.row][self.startNode.col]
-        result.goalNodes = [result.maze[node.row][node.col] for node in self.goalNodes]
-
-        return result
 
     @staticmethod
     def calculateManhattanDistance(node1: Node, node2: Node):

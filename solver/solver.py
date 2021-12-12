@@ -2,6 +2,7 @@ from typing import List
 from maze.node import Node
 from maze.nodetype import NodeType
 from maze.maze import Maze
+import pprint
 
 class Solver:
     maze: Maze
@@ -13,6 +14,18 @@ class Solver:
 
     def __init__(self, maze) -> None:
         self.maze = maze
+
+    def __str__(self) -> str:
+        result = ""
+        result += f"Nodes Expanded: {self.numNodesExpanded}\n"
+        result += f"Max Nodes In Open List: {self.maxNumNodesInList}\n"
+        result += f"Total Cost: {self.totalCost}\n"
+        result += f"Path:\n"
+        for node in self.path:
+            result += f"    <{node.type}, Row: {node.row}, Column: {node.col}>\n"
+        result += "\n" + self.maze.__str__()
+
+        return result
 
     def addToOpenList(self, node: Node):
         raise NotImplementedError("addToOpenList() not overriden")
@@ -31,7 +44,7 @@ class Solver:
                 self.totalCost = currentNode.g
                 
                 while currentNode is not None:
-                    self.path.append(currentNode)
+                    self.path.insert(0, currentNode)
                     currentNode = currentNode.previousNode
 
                 return
