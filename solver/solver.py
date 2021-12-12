@@ -6,14 +6,16 @@ import pprint
 
 class Solver:
     maze: Maze
-    openList: List[Node] = []
+    openList: List[Node]
     numNodesExpanded: int = 0
     maxNumNodesInList: int = 0
     totalCost: int = 0
-    path: List[Node] = []
+    path: List[Node]
 
     def __init__(self, maze) -> None:
         self.maze = maze
+        self.openList = list()
+        self.path = list()
 
     def __str__(self) -> str:
         result = ""
