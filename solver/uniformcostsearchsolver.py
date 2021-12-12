@@ -8,7 +8,7 @@ class UniformCostSearchSolver(Solver):
         super().__init__(maze)
 
     def addToOpenList(self, node: Node):
-        heapq.heappush(self.openList, (node.g, random.random(),node))
+        heapq.heappush(self.openList, (node.g, random.random(), node))
 
     def takeFromOpenList(self):
         return heapq.heappop(self.openList)[~0]
