@@ -41,7 +41,7 @@ class Maze:
                         result += "# "
                     case NodeType.PATH:
                         if node.isVisited: result += "* "
-                        else:              result += ". "
+                        else:              result += "  "
                     case NodeType.START:
                         result += "S "
                     case NodeType.GOAL:
@@ -81,8 +81,8 @@ class Maze:
         self.maze.append(obstacleNodeList + obstacleNodeList * self.columnLength + obstacleNodeList)
 
     def selectStartNode(self):
-        row = random.randint(1, self.rowLength)
-        col = random.randint(1, self.columnLength)
+        row = self.rowLength // 2
+        col = self.columnLength // 2
 
         node = self.maze[row][col]
 
@@ -112,7 +112,8 @@ class Maze:
             goalGenerateCounter += 1
 
     def addObstacles(self):
-        numOfObstacleNodes = len(self.goalNodes) * 4
+        PROPORTION_AS_OBSTACLES = 0.15
+        numOfObstacleNodes = math.ceil((self.rowLength * self.columnLength) * PROPORTION_AS_OBSTACLES)
         obstacleGenerateCounter = 0
 
         while obstacleGenerateCounter != numOfObstacleNodes:
