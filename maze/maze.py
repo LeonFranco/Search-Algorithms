@@ -116,7 +116,7 @@ class Maze:
             goalGenerateCounter += 1
 
     def addObstacles(self):
-        proportionAsObstacles = 0.3
+        proportionAsObstacles = 0.5
         totalNumberNodes = self.rowLength * self.columnLength
         numOfObstacleNodes = totalNumberNodes * proportionAsObstacles
         obstacleGenerateCounter = 0
@@ -177,13 +177,13 @@ class Maze:
     def getAdjacentNodes(self, node: Node):
         neighbourNodeCoordinates = [
             (node.row - 1, node.col), # up
-            (node.row - 1, node.col + 1), # up + right
+            # (node.row - 1, node.col + 1), # up + right
             (node.row, node.col + 1), # right
-            (node.row + 1, node.col + 1), # down + right
+            # (node.row + 1, node.col + 1), # down + right
             (node.row + 1, node.col), # down
-            (node.row + 1, node.col - 1), # down + left
+            # (node.row + 1, node.col - 1), # down + left
             (node.row, node.col - 1),  # left
-            (node.row - 1, node.col - 1) # up + left
+            # (node.row - 1, node.col - 1) # up + left
         ]
 
         neighbourNodes = []
@@ -216,7 +216,7 @@ class Maze:
         for row in self.maze:
             for node in row:
                 if node.type == NodeType.OBSTACLE or node.type == NodeType.GOAL: continue
-                node.h = min(self.calculateStraightLineDistance(node, goal) for goal in self.goalNodes)
+                node.h = min(self.calculateManhattanDistance(node, goal) for goal in self.goalNodes)
 
     @staticmethod
     def calculateManhattanDistance(node1: Node, node2: Node):
