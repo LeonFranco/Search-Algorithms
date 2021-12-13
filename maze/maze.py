@@ -197,13 +197,18 @@ class Maze:
                 if node.type == NodeType.OBSTACLE or node.type == NodeType.START: continue
                 node.g = random.randint(MIN_COST, MAX_COST)
 
-    # manhattan distance to NEAREST goal node
+    # heuristic is straight line distance to the NEAREST goal
+    # straight line distance is used instead of Manhattan Distance since diagonal movement is allowed
     def calculateHeuristics(self):
         for row in self.maze:
             for node in row:
                 if node.type == NodeType.OBSTACLE or node.type == NodeType.GOAL: continue
-                node.h = min(self.calculateManhattanDistance(node, goal) for goal in self.goalNodes)
+                node.h = min(self.calculateStraightLineDistance(node, goal) for goal in self.goalNodes)
 
     @staticmethod
     def calculateManhattanDistance(node1: Node, node2: Node):
         return abs(node1.row - node2.row) + abs(node1.col - node2.col)
+
+    @staticmethod
+    def calculateStraightLineDistance(node1: Node, node2: Node):
+        return math.sqrt((node1.row - node2.row) ** 2 + (node1.col - node2.col) ** 2)
