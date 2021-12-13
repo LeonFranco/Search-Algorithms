@@ -116,7 +116,7 @@ class Maze:
             goalGenerateCounter += 1
 
     def addObstacles(self):
-        PROPORTION_AS_OBSTACLES = 0.3
+        PROPORTION_AS_OBSTACLES = 0.25
         numOfObstacleNodes = math.ceil((self.rowLength * self.columnLength) * PROPORTION_AS_OBSTACLES)
         obstacleGenerateCounter = 0
 
@@ -163,10 +163,14 @@ class Maze:
             
     def getAdjacentNodes(self, node: Node):
         neighbourNodeCoordinates = [
-            (node.row + 1, node.col), # up
+            (node.row - 1, node.col), # up
+            (node.row - 1, node.col + 1), # up + right
             (node.row, node.col + 1), # right
-            (node.row - 1, node.col), # down
-            (node.row, node.col - 1)  # left
+            (node.row + 1, node.col + 1), # down + right
+            (node.row + 1, node.col), # down
+            (node.row + 1, node.col - 1), # down + left
+            (node.row, node.col - 1),  # left
+            (node.row - 1, node.col - 1) # up + left
         ]
 
         neighbourNodes = []
@@ -186,7 +190,7 @@ class Maze:
 
     def generateRandomCosts(self):
         MIN_COST = 1
-        MAX_COST = 10
+        MAX_COST = 5
 
         for row in self.maze:
             for node in row:
