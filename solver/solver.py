@@ -43,12 +43,10 @@ class Solver:
             currentNode = self.takeFromOpenList()
 
             if currentNode.type == NodeType.GOAL:
-                self.totalCost = currentNode.g
-                
                 while currentNode is not None:
                     self.path.insert(0, currentNode)
+                    self.totalCost += currentNode.g
                     currentNode = currentNode.previousNode
-
                 return
 
             if currentNode.isVisited: continue
@@ -60,9 +58,17 @@ class Solver:
                 if neighbourNode.isVisited: continue
 
                 neighbourNode.previousNode = currentNode
-                neighbourNode.g += currentNode.g
 
                 self.addToOpenList(neighbourNode)
             
             self.maxNumNodesInList = max(self.maxNumNodesInList, len(self.openList))
 
+    @staticmethod
+    def calculateCurrentTotalCost(node: Node):
+        totalCost = 0
+
+        while node is not None:
+            totalCost += node.g
+            node = node.previousNode
+        
+        return totalCost
