@@ -7,6 +7,7 @@ import math
 from collections import deque
 import copy
 from colorama import Fore, Back, Style # type: ignore
+import heapq
 
 random.seed(globalconstants.SEED)
 
@@ -115,7 +116,7 @@ class Maze:
             goalGenerateCounter += 1
 
     def addObstacles(self):
-        PROPORTION_AS_OBSTACLES = 0.15
+        PROPORTION_AS_OBSTACLES = 0.25
         numOfObstacleNodes = math.ceil((self.rowLength * self.columnLength) * PROPORTION_AS_OBSTACLES)
         obstacleGenerateCounter = 0
 
@@ -136,26 +137,28 @@ class Maze:
             node.type = NodeType.PATH
 
     def isValidMaze(self):
-        toBeVisited = deque()
-        toBeVisited.append(self.startNode)
+        visited = list()
+        toBeVisited = list()
+        heapq.heappush(toBeVisited, (self.startNode.h, random.random(), self.startNode))
 
         isValid = False
 
         while toBeVisited:
-            currentNode = toBeVisited.pop()
+            currentNode = heapq.heappop(toBeVisited)[~0]
 
             if currentNode.isVisited: continue
 
             currentNode.isVisited = True
+            visited.append(currentNode)
 
             if currentNode.type == NodeType.GOAL and all(node.isVisited for node in self.goalNodes):
                 isValid = True
                 break
 
             for node in self.getAdjacentNodes(currentNode):
-                toBeVisited.append(node)
+                heapq.heappush(toBeVisited, (node.h, random.random(), node))
 
-        self.resetVisitedNodes()
+        self.resetVisitedNodes(visited)
         return isValid
             
     def getAdjacentNodes(self, node: Node):
@@ -177,10 +180,9 @@ class Maze:
 
         return neighbourNodes
 
-    def resetVisitedNodes(self):
-        for row in self.maze:
-            for node in row:
-                node.isVisited = False
+    def resetVisitedNodes(self, visited: List[Node]):
+        for node in visited:
+            node.isVisited = False
 
     def generateRandomCosts(self):
         MIN_COST = 1
@@ -191,6 +193,7 @@ class Maze:
                 if node.type == NodeType.OBSTACLE or node.type == NodeType.START: continue
                 node.g = random.randint(MIN_COST, MAX_COST)
 
+    # manhattan distance to NEAREST goal node
     def calculateHeuristics(self):
         for row in self.maze:
             for node in row:
