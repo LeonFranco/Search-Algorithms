@@ -116,7 +116,7 @@ class Maze:
             goalGenerateCounter += 1
 
     def addObstacles(self):
-        PROPORTION_AS_OBSTACLES = 0.25
+        PROPORTION_AS_OBSTACLES = 0.3
         numOfObstacleNodes = math.ceil((self.rowLength * self.columnLength) * PROPORTION_AS_OBSTACLES)
         obstacleGenerateCounter = 0
 
