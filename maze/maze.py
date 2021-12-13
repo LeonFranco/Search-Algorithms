@@ -6,6 +6,7 @@ import random
 import math
 from collections import deque
 import copy
+from colorama import Fore, Back, Style # type: ignore
 
 random.seed(globalconstants.SEED)
 
@@ -31,22 +32,24 @@ class Maze:
         self.calculateHeuristics()
 
     def __str__(self) -> str:
-        result = ""
+        result = f""
 
         for row in range(self.rowLength + 2):
+            result += f"{Back.WHITE}"
+
             for col in range(self.columnLength + 2):
                 node = self.maze[row][col]
                 match node.type:
                     case NodeType.OBSTACLE:
-                        result += "# "
+                        result += f"{Fore.YELLOW}#"
                     case NodeType.PATH:
-                        if node.isVisited: result += "* "
-                        else:              result += "  "
+                        if node.isVisited: result += f"{Fore.MAGENTA}*"
+                        else:              result += " "
                     case NodeType.START:
-                        result += "S "
+                        result += f"{Back.RED}{Fore.WHITE}S{Back.WHITE}"
                     case NodeType.GOAL:
-                        result += "G "
-            result += "\n"
+                        result += f"{Back.GREEN}{Fore.WHITE}G{Back.WHITE}"
+            result += f"{Style.RESET_ALL}\n"
 
         return result
 
