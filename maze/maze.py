@@ -28,9 +28,9 @@ class Maze:
         self.generateMazeTemplate()
         self.selectStartNode()
         self.selectGoalNodes()
+        self.calculateHeuristics()
         self.addObstacles()
         self.generateRandomCosts()
-        self.calculateHeuristics()
 
     def __str__(self) -> str:
         result = f""
@@ -116,25 +116,38 @@ class Maze:
             goalGenerateCounter += 1
 
     def addObstacles(self):
-        PROPORTION_AS_OBSTACLES = 0.25
-        numOfObstacleNodes = math.ceil((self.rowLength * self.columnLength) * PROPORTION_AS_OBSTACLES)
+        proportionAsObstacles = 0.3
+        totalNumberNodes = self.rowLength * self.columnLength
+        numOfObstacleNodes = totalNumberNodes * proportionAsObstacles
         obstacleGenerateCounter = 0
+        
+        currentObstacles = []
+        mazeCopy = sum(copy.copy(self.maze), [])
+        random.shuffle(mazeCopy)
 
-        while obstacleGenerateCounter != numOfObstacleNodes:
-            row = random.randint(1, self.rowLength)
-            col = random.randint(1, self.columnLength)
-            
-            node = self.maze[row][col]
+        while proportionAsObstacles > 0.0:
+            while obstacleGenerateCounter < numOfObstacleNodes:
+                node = mazeCopy.pop(0)
 
-            if node.type != NodeType.PATH: continue
+                if node.type != NodeType.PATH:
+                    mazeCopy.append(node)
+                    continue
 
-            node.type = NodeType.OBSTACLE
-
-            if (self.isValidMaze()):
+                node.type = NodeType.OBSTACLE
+                currentObstacles.append(node)
                 obstacleGenerateCounter += 1
-                continue
 
-            node.type = NodeType.PATH
+                mazeCopy.append(node)
+            
+            if self.isValidMaze(): break
+
+            for node in currentObstacles:
+                node.type = NodeType.PATH
+            currentObstacles.clear()
+            
+            obstacleGenerateCounter = 0
+            proportionAsObstacles -= 0.01
+            numOfObstacleNodes = totalNumberNodes * proportionAsObstacles
 
     def isValidMaze(self):
         visited = list()
