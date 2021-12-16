@@ -5,7 +5,7 @@ import random
 
 class UniformCostSearchSolver(Solver):
     def __init__(self, maze) -> None:
-        super().__init__(maze)
+        super().__init__(maze, "Uniform Cost Search")
 
     def addToOpenList(self, node: Node):
         totalCost = self.calculateCurrentTotalCost(node)

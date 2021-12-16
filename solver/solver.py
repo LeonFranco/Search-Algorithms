@@ -5,7 +5,7 @@ from maze.maze import Maze
 import pprint
 
 class Solver:
-    def __init__(self, maze) -> None:
+    def __init__(self, maze: Maze, algoName) -> None:
         self.maze = maze
         self.openList: List[Node] = list()
         self.numNodesExpanded: int = 0
@@ -13,6 +13,7 @@ class Solver:
         self.totalCost: int = 0
         self.path: List[Node] = list()
         self.pathLength: int = 0
+        self.algoName = algoName
 
     def __str__(self) -> str:
         result = ""

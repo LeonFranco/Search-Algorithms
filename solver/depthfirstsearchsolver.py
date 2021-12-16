@@ -3,7 +3,7 @@ from maze.node import Node
 
 class DepthFirstSearchSolver(Solver):
     def __init__(self, maze) -> None:
-        super().__init__(maze)
+        super().__init__(maze, "Depth First Search")
 
     def addToOpenList(self, node: Node):
         self.openList.append(node)

@@ -5,7 +5,7 @@ import random
 
 class GreedyBestFirstSearch(Solver):
     def __init__(self, maze) -> None:
-        super().__init__(maze)
+        super().__init__(maze, "Greedy Best First Search")
 
     def addToOpenList(self, node: Node):
         heapq.heappush(self.openList, (node.h, random.random(), node))
