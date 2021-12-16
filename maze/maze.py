@@ -6,7 +6,6 @@ import random
 import math
 from collections import deque
 import copy
-from colorama import Fore, Back, Style # type: ignore
 import heapq
 
 random.seed(globalconstants.SEED)
@@ -30,24 +29,24 @@ class Maze:
         self.generateRandomCosts()
 
     def __str__(self) -> str:
-        result = f""
+        result = ""
 
         for row in range(self.rowLength + 2):
-            result += f"{Back.WHITE}"
+            result += ""
 
             for col in range(self.columnLength + 2):
                 node = self.maze[row][col]
                 match node.type:
                     case NodeType.OBSTACLE:
-                        result += f"{Fore.YELLOW}#"
+                        result += "# "
                     case NodeType.PATH:
-                        if node.isVisited: result += f"{Fore.MAGENTA}*"
-                        else:              result += " "
+                        if node.isVisited: result += "* "
+                        else:              result += "  "
                     case NodeType.START:
-                        result += f"{Back.RED}{Fore.WHITE}S{Back.WHITE}"
+                        result += "S "
                     case NodeType.GOAL:
-                        result += f"{Back.GREEN}{Fore.WHITE}G{Back.WHITE}"
-            result += f"{Style.RESET_ALL}\n"
+                        result += "G "
+            result += "\n"
 
         return result
 
