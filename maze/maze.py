@@ -15,6 +15,8 @@ class Maze:
         if  rowLength < 10 or columnLength < 10:
             raise ValueError("rowLength and columnLength must both be at least 10")
 
+        print("Start maze creation")
+
         self.rowLength: int = rowLength
         self.columnLength: int = columnLength
         self.maze: List[Node] = []
@@ -27,6 +29,8 @@ class Maze:
         self.calculateHeuristics()
         self.addObstacles()
         self.generateRandomCosts()
+
+        print("Finish maze creation")
 
     def __str__(self) -> str:
         result = ""
@@ -112,7 +116,7 @@ class Maze:
             goalGenerateCounter += 1
 
     def addObstacles(self):
-        proportionAsObstacles = 0.5
+        proportionAsObstacles = 0.33
         totalNumberNodes = self.rowLength * self.columnLength
         numOfObstacleNodes = totalNumberNodes * proportionAsObstacles
         obstacleGenerateCounter = 0

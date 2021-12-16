@@ -2,6 +2,7 @@ from typing import List
 from maze.node import Node
 from maze.nodetype import NodeType
 from maze.maze import Maze
+import time
 import pprint
 
 class Solver:
@@ -12,8 +13,8 @@ class Solver:
         self.maxNumNodesInList: int = 0
         self.totalCost: int = 0
         self.path: List[Node] = list()
-        self.pathLength: int = 0
         self.algoName: str = algoName
+        self.executionTime: float = 0.0
 
     def __str__(self) -> str:
         result = ""
@@ -34,6 +35,9 @@ class Solver:
         raise NotImplementedError("takeFromOpenList() not overriden")
 
     def solve(self):
+        print(f"Start {self.algoName}")
+        self.executionTime = time.perf_counter()
+
         self.addToOpenList(self.maze.startNode)
         self.maxNumNodesInList = 1
 
@@ -41,11 +45,14 @@ class Solver:
             currentNode = self.takeFromOpenList()
 
             if currentNode.type == NodeType.GOAL:
+                self.executionTime = time.perf_counter() - self.executionTime
+                print(f"Finish {self.algoName} (Execution time: {self.executionTime:.4f} seconds)")
+
                 while currentNode is not None:
                     self.path.insert(0, currentNode)
                     self.totalCost += currentNode.g
                     currentNode = currentNode.previousNode
-                self.pathLength = len(self.path)
+
                 return
 
             if currentNode.isVisited: continue
