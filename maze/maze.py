@@ -12,18 +12,15 @@ import heapq
 random.seed(globalconstants.SEED)
 
 class Maze:
-    rowLength: int
-    columnLength: int
-    maze: List[Node] = []
-    startNode: Node
-    goalNodes: List[Node] = []
-
     def __init__(self, rowLength=10, columnLength=10) -> None:
         if  rowLength < 10 or columnLength < 10:
             raise ValueError("rowLength and columnLength must both be at least 10")
 
-        self.rowLength = rowLength
-        self.columnLength = columnLength
+        self.rowLength: int = rowLength
+        self.columnLength: int = columnLength
+        self.maze: List[Node] = []
+        self.startNode: Node = None
+        self.goalNodes: List[Node] = []
 
         self.generateMazeTemplate()
         self.selectStartNode()
