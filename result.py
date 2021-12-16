@@ -11,5 +11,8 @@ def createResultFolder():
 def writeMaze(maze: Maze):
     path = os.path.join(FOLDER_DIR, "maze.txt")
 
+    legend = "S: Start\n" + "G: Goal\n" +  "#: Obstacle\n\n"
+
     with open(path, "w") as mazeFile:
+        mazeFile.write(legend)
         mazeFile.write(maze.__str__())
