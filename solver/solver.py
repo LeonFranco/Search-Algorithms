@@ -6,14 +6,14 @@ import pprint
 
 class Solver:
     def __init__(self, maze: Maze, algoName) -> None:
-        self.maze = maze
+        self.maze: Maze = maze
         self.openList: List[Node] = list()
         self.numNodesExpanded: int = 0
         self.maxNumNodesInList: int = 0
         self.totalCost: int = 0
         self.path: List[Node] = list()
         self.pathLength: int = 0
-        self.algoName = algoName
+        self.algoName: str = algoName
 
     def __str__(self) -> str:
         result = ""

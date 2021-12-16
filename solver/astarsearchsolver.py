@@ -5,7 +5,7 @@ import random
 
 class AStarSearchSolver(Solver):
     def __init__(self, maze) -> None:
-        super().__init__(maze, "A* Search")
+        super().__init__(maze, "A Star Search")
 
     def addToOpenList(self, node: Node):
         totalCost = self.calculateCurrentTotalCost(node)
