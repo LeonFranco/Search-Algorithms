@@ -10,25 +10,11 @@ from solver.uniformcostsearchsolver import UniformCostSearchSolver
 from solver.greedybestfirstsearchsolver import GreedyBestFirstSearch
 from solver.astarsearchsolver import AStarSearchSolver
 import result
+from driver import Driver
 
 def main():
-    maze = Maze(500, 500) # * main
-    # maze = Maze()
-    result.createResultFolder()
-    result.writeMaze(maze)
-
-
-    # print(maze)
-    solvers: List[Solver] = [
-        DepthFirstSearchSolver(copy.deepcopy(maze)),
-        # BreadthFirstSearchSolver(copy.deepcopy(maze)),
-        # UniformCostSearchSolver(copy.deepcopy(maze)),
-        # GreedyBestFirstSearch(copy.deepcopy(maze)),
-        # AStarSearchSolver(copy.deepcopy(maze)),
-    ]
-
-    for solver in solvers:
-        solver.solve()
-        result.writeSolverStats(solver)
+    driver = Driver(Maze(1000, 1000))
+    driver.start()
+    driver.getResults()
 
 if __name__ == "__main__": main()
