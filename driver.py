@@ -13,23 +13,46 @@ import time
 
 class Driver:
     def __init__(self, maze: Maze) -> None:
-        print("Program driver initialization - Start")
-        timer = time.perf_counter()
-
-        self.maze = maze
-        self.solvers: List[Solver] = [
-            DepthFirstSearchSolver(copy.deepcopy(self.maze)),
-            BreadthFirstSearchSolver(copy.deepcopy(self.maze)),
-            UniformCostSearchSolver(copy.deepcopy(self.maze)),
-            GreedyBestFirstSearch(copy.deepcopy(self.maze)),
-            AStarSearchSolver(copy.deepcopy(self.maze)),
-        ]
-
-        timer = time.perf_counter() - timer
-        print(f"Program driver initialization - Finish (Execution time: {timer:.4f} sec)")
+        self.maze: Maze = maze
+        self.solvers: List[Solver] = []
 
     def start(self):
-        print("All solvers - Start")
+        self.initializatSolvers()
+        self.executeSolvers()
+
+    def initializatSolvers(self):
+        print("Initialize solvers - Start")
+        timer = time.perf_counter()
+
+        solverClasses = [
+            DepthFirstSearchSolver,
+            BreadthFirstSearchSolver,
+            UniformCostSearchSolver,
+            GreedyBestFirstSearch,
+            AStarSearchSolver,
+        ]
+
+        threads: List[threading.Thread] = []
+        solverListLock = threading.Lock()
+
+        for solverClass in solverClasses:
+            def worker():
+                solver: Solver = solverClass(copy.deepcopy(self.maze))
+                with solverListLock:
+                    self.solvers.append(solver)
+
+            thread = threading.Thread(target=worker)
+            thread.start()
+            threads.append(thread)
+
+        for thread in threads:
+            thread.join()
+
+        timer = time.perf_counter() - timer
+        print(f"Initialize solvers - Finish (Execution time: {timer:.4f} sec)")
+
+    def executeSolvers(self):
+        print("Execute all solvers - Start")
         timer = time.perf_counter()
 
         threads: List[threading.Thread] = []
@@ -43,7 +66,7 @@ class Driver:
             thread.join()
         
         timer = time.perf_counter() - timer
-        print(f"All solvers - Finish (Execution time: {timer:.4f} sec)")
+        print(f"Execute all solvers - Finish (Execution time: {timer:.4f} sec)")
 
     def getResults(self):
         result.createResultFolder()
@@ -51,5 +74,3 @@ class Driver:
 
         for solver in self.solvers:
             result.writeSolverStats(solver)
-
-solvers = [DepthFirstSearchSolver]
