@@ -35,7 +35,7 @@ class Solver:
         raise NotImplementedError("takeFromOpenList() not overriden")
 
     def solve(self):
-        print(f"Start {self.algoName}")
+        print(f"{self.algoName} - Start")
         self.executionTime = time.perf_counter()
 
         self.addToOpenList(self.maze.startNode)
@@ -46,7 +46,7 @@ class Solver:
 
             if currentNode.type == NodeType.GOAL:
                 self.executionTime = time.perf_counter() - self.executionTime
-                print(f"Finish {self.algoName} (Execution time: {self.executionTime:.4f} seconds)")
+                print(f"{self.algoName} - Finish (Execution time: {self.executionTime:.4f} sec)")
 
                 while currentNode is not None:
                     self.path.insert(0, currentNode)

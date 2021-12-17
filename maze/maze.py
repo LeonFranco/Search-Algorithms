@@ -16,7 +16,7 @@ class Maze:
         if  rowLength < 10 or columnLength < 10:
             raise ValueError("rowLength and columnLength must both be at least 10")
 
-        print("Start maze creation")
+        print("Maze initialization - Start")
         timer = time.perf_counter()
 
         self.rowLength: int = rowLength
@@ -33,7 +33,7 @@ class Maze:
         self.generateRandomCosts()
 
         timer = time.perf_counter() - timer
-        print(f"Finish maze creation (Execution time: {timer:.4f} seconds)")
+        print(f"Maze initialization - Finish (Execution time: {timer:.4f} sec)")
 
     def __str__(self) -> str:
         result = ""

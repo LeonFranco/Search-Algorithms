@@ -13,7 +13,7 @@ import time
 
 class Driver:
     def __init__(self, maze: Maze) -> None:
-        print("Start program driver initialization")
+        print("Program driver initialization - Start")
         timer = time.perf_counter()
 
         self.maze = maze
@@ -26,10 +26,10 @@ class Driver:
         ]
 
         timer = time.perf_counter() - timer
-        print(f"Finish program driver initialization (Execution time: {timer:.4f} seconds)")
+        print(f"Program driver initialization - Finish (Execution time: {timer:.4f} sec)")
 
     def start(self):
-        print("Start all solvers")
+        print("All solvers - Start")
         timer = time.perf_counter()
 
         threads: List[threading.Thread] = []
@@ -43,7 +43,7 @@ class Driver:
             thread.join()
         
         timer = time.perf_counter() - timer
-        print(f"Finish all solvers (Execution time: {timer:.4f} seconds)")
+        print(f"All solvers - Finish (Execution time: {timer:.4f} sec)")
 
     def getResults(self):
         result.createResultFolder()
