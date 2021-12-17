@@ -35,5 +35,6 @@ def formateSolverStates(solver: Solver):
             f"Max number of nodes in open list: {solver.maxNumNodesInList}\n"
             f"Total cost of final path: {solver.totalCost}\n"
             f"Path length: {len(solver.path)}\n"
+            f"Start node: <row={solver.path[0].row}, col={solver.path[0].col}>\n"
             f"Goal node: <row={solver.path[~0].row}, col={solver.path[~0].col}>\n"
-            f"Execution time: {solver.executionTime:.4f}\n")
+            f"Execution time: {solver.executionTime:.4f} sec\n")
