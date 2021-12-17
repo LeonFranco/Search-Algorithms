@@ -7,6 +7,7 @@ import math
 from collections import deque
 import copy
 import heapq
+import time
 
 random.seed(globalconstants.SEED)
 
@@ -16,6 +17,7 @@ class Maze:
             raise ValueError("rowLength and columnLength must both be at least 10")
 
         print("Start maze creation")
+        timer = time.perf_counter()
 
         self.rowLength: int = rowLength
         self.columnLength: int = columnLength
@@ -30,7 +32,8 @@ class Maze:
         self.addObstacles()
         self.generateRandomCosts()
 
-        print("Finish maze creation")
+        timer = time.perf_counter() - timer
+        print(f"Finish maze creation (Execution time: {timer:.4f} seconds)")
 
     def __str__(self) -> str:
         result = ""
@@ -122,22 +125,19 @@ class Maze:
         obstacleGenerateCounter = 0
         
         currentObstacles = []
-        mazeCopy = sum(copy.copy(self.maze), [])
-        random.shuffle(mazeCopy)
 
         while proportionAsObstacles > 0.0:
             while obstacleGenerateCounter < numOfObstacleNodes:
-                node = mazeCopy.pop(0)
+                row = random.randint(1, self.rowLength)
+                col = random.randint(1, self.columnLength)
 
-                if node.type != NodeType.PATH:
-                    mazeCopy.append(node)
-                    continue
+                node: Node = self.maze[row][col]
+
+                if node.type != NodeType.PATH: continue
 
                 node.type = NodeType.OBSTACLE
                 currentObstacles.append(node)
                 obstacleGenerateCounter += 1
-
-                mazeCopy.append(node)
             
             if self.isValidMaze(): break
 
