@@ -3,7 +3,6 @@ from maze.node import Node
 from maze.nodetype import NodeType
 from maze.maze import Maze
 import time
-import pprint
 
 class Solver:
     def __init__(self, maze: Maze, algoName) -> None:

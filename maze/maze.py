@@ -4,7 +4,6 @@ from typing import List
 import globalconstants
 import random
 import math
-from collections import deque
 import copy
 import heapq
 import time
