@@ -2,7 +2,7 @@ from maze.maze import Maze
 from driver import Driver
 
 def main():
-    driver = Driver(Maze(rowLength=1000, columnLength=1000))
+    driver = Driver(Maze(rowLength=2000, columnLength=2000))
     driver.start()
     driver.getResults()
 
