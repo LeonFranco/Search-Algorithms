@@ -9,5 +9,5 @@ class Node:
     row: int = -1
     col: int = -1
     g: int = 0
-    h: int = 0
+    h: int = -1
     previousNode: Node = None
