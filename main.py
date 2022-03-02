@@ -10,6 +10,6 @@ def main():
     driver.start()
 
     timer = time.perf_counter() - timer
-    print(f"=== Program - Finish (Execution time: {(timer / 60):.4f} min) ===")
+    print(f"=== Program - Finish (Execution time: {timer:.4f} sec) ===")
 
 if __name__ == "__main__": main()
