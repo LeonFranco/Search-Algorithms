@@ -46,8 +46,7 @@ class Maze:
                     case NodeType.OBSTACLE:
                         result += "# "
                     case NodeType.PATH:
-                        if node.isVisited: result += "* "
-                        else:              result += "  "
+                        result += "* " if node.isVisited else " "
                     case NodeType.START:
                         result += "S "
                     case NodeType.GOAL:
