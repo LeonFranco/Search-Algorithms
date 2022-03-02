@@ -1,21 +1,25 @@
 This project was run on windows. Type the following into the terminal to start:
+```
 python main.py
+```
 
 This project was not run on either Mac or Linux. But try the following in the terminal on those OSs:
+```
 python3 main.py
+```
 
 This project was only tested on Python 3.10.
 
 This project aims to test out five different search algorithms on a maze with the following specifications:
 
-## Maze specs:
+### Maze specs:
 - 1/3 of the maze spaces are obstacles
 - multiple goal nodes
 - random costs to enter each space
 
 The goal is to see which search algorithms go towards which goal nodes and see if they choose similar goal nodes or completely different goal nodes. The performance of each algorithm will also be recorded. The performance is measured in the following way:
 
-## Performance Measurements:
+### Performance Measurements:
 - number of nodes expanded
 - max number of nodes in the open list (to-be-visited list)
 - total cost of each path
@@ -23,7 +27,7 @@ The goal is to see which search algorithms go towards which goal nodes and see i
 
 Here are the search algorithms that will are under test:
 
-## Search Algorithms:
+### Search Algorithms:
 - Breadth First Search
 - Depth First Search
 - Uniform Cost Search
