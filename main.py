@@ -6,7 +6,11 @@ def main():
     print("=== Program - Start ===")
     timer = time.perf_counter()
 
-    driver = Driver(Maze(rowLength=1100, columnLength=1100))
+    maze = Maze(
+        rowLength=2000, 
+        columnLength=2000
+    )
+    driver = Driver(maze)
     driver.start()
 
     timer = time.perf_counter() - timer
