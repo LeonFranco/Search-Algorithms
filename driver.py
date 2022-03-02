@@ -6,8 +6,7 @@ from solver.breadthfirstsearchsolver import BreadthFirstSearchSolver
 from solver.uniformcostsearchsolver import UniformCostSearchSolver
 from solver.greedybestfirstsearchsolver import GreedyBestFirstSearch
 from solver.astarsearchsolver import AStarSearchSolver
-import copy
-import threading
+import multiprocessing
 import result
 import time
 
@@ -30,20 +29,15 @@ class Driver:
             AStarSearchSolver,
         ]
 
-        threads: List[threading.Thread] = []
+        processes: List[multiprocessing.Process] = []
 
         for solverClass in solverClasses:
-            def worker():
-                solver: Solver = solverClass(copy.deepcopy(self.maze))
-                solver.solve()
-                result.writeSolverStats(solver)
+            process = multiprocessing.Process(target=self.worker, args=[solverClass(self.maze)])
+            process.start()
+            processes.append(process)
 
-            thread = threading.Thread(target=worker)
-            thread.start()
-            threads.append(thread)
-
-        for thread in threads:
-            thread.join()
+        for process in processes:
+            process.join()
 
         timer = time.perf_counter() - timer
         print(f"Execute all solvers - Finish (Execution time: {timer:.4f} sec)")
@@ -54,3 +48,8 @@ class Driver:
 
         for solver in self.solvers:
             result.writeSolverStats(solver)
+
+    def worker(self, solver):
+        solver.solve()
+        import result
+        result.writeSolverStats(solver)
